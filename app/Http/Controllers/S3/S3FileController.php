@@ -27,6 +27,7 @@ class S3FileController extends Controller
     {
 
        try {
+
         $data = $request->file("profile");
         $ex = $data->guessClientExtension();
         $filename = Str::uuid() . "." . $ex;
@@ -39,7 +40,8 @@ class S3FileController extends Controller
         ]);
 
        } catch (\Throwable $th) {
-           dd($th);
+        return back()
+        ->with("error","File uploaded failed....");
        }
 
         return back()
