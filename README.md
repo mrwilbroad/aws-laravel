@@ -1,4 +1,4 @@
-<h6> **S3 storage driver for Laravel Filesystem Storage**</h6>
+<h1 align='center'> **S3 storage driver for Laravel Filesystem Storage** </h1>
 
 # Clone
 # Edit
