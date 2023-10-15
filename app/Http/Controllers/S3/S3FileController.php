@@ -26,17 +26,21 @@ class S3FileController extends Controller
     public function SendProfileType(S3ProfileSendRequest $request)
     {
 
+       try {
         $data = $request->file("profile");
         $ex = $data->guessClientExtension();
-        $filename = "Profile/" . Str::uuid() . "." . $ex;;
+        $filename = Str::uuid() . "." . $ex;
+        $filename = $data->getClientOriginalName();
         $user_id = $request->user()->id;
-        $data->storeAs($filename, "", [
-            "disk" => "s3"
-        ]);
+        Storage::disk("s3")->putFileAs("documents",$data,$filename);
         Files::create([
             "user_id" => $user_id,
             "filename" => $filename
         ]);
+
+       } catch (\Throwable $th) {
+           dd($th);
+       }
 
         return back()
                       ->with("success","File uploaded successfull");
